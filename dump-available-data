@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+import asyncio
+import os
+import yaml
+from typing import Any
+from argparse import ArgumentParser, Action
+from pathlib import Path
+
+from custom_components.gridboss.api import EG4Client
+
+# ruff: noqa: T201
+
+class EnvDefault(Action):
+    def __init__(
+        self,
+        envvar: str,
+        required: bool = True,
+        default: str | None = None,
+        **kwargs: Any,
+    ):
+        if envvar and envvar in os.environ:
+            default = os.environ[envvar]
+        if required and default:
+            required = False
+        super().__init__(default=default, required=required, **kwargs)
+
+parser = ArgumentParser()
+parser.add_argument(
+    "--username",
+    help="username",
+    action=EnvDefault,
+    envvar='EG4_USERNAME',
+)
+parser.add_argument(
+    "--password",
+    help="password",
+    action=EnvDefault,
+    envvar='EG4_PASSWORD',
+)
+parser.add_argument(
+    "--plant",
+    help="select a specific plant id",
+    action=EnvDefault,
+    envvar='EG4_PLANT_ID',
+    required=False,
+)
+parser.add_argument(
+    "--file",
+    help="output file",
+    default="./gridboss_data.yaml",
+)
+
+args = parser.parse_args()
+
+async def main():
+    client = EG4Client(username=args.username, password=args.password)
+
+    print("* Logging in...")
+    login = await client.login()
+    assert isinstance(login, dict)
+
+    data: dict[str, Any] = {
+        "login": login,
+        "plant_id": args.plant,
+    }
+    print(login)
+
+    gridboss = await client.get_gridboss(args.plant)
+    data.update(await gridboss.get_update_data(client))
+
+    file = Path(args.file)
+    file.write_text(yaml.safe_dump(data, sort_keys=False))
+
+    print(f"* Data written to {file}...")
+
+    await client.close()
+
+asyncio.run(main())

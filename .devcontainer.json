@@ -1,0 +1,55 @@
+{
+  "name": "jasonk/ha-gridboss",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13-bullseye",
+  "postCreateCommand": "scripts/setup",
+  "forwardPorts": [8123],
+  "portsAttributes": {
+    "8123": {
+      "label": "Home Assistant",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "DmitryDorofeev.empty-indent",
+        "EditorConfig.EditorConfig",
+        "christian-kohler.path-intellisense",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.pylint",
+        "ms-python.python",
+        "oderwat.indent-rainbow",
+        "redhat.vscode-yaml",
+        "ryanluker.vscode-coverage-gutters",
+        "streetsidesoftware.code-spell-checker",
+        "yzhang.markdown-all-in-one"
+      ],
+      "settings": {
+        "python.pythonPath": ".devcontainer_venv/bin/python3",
+        "python.defaultInterpreterPath": ".devcontainer_venv/bin/python3"
+      }
+    }
+  },
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/apt-packages:1": {
+        "packages": "ffmpeg libturbojpeg0 libpcap-dev"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/bat:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/ruff:1": {}
+  },
+
+  "containerEnv": {
+    "PYTHONSAFEPATH": "true",
+    "UV_PROJECT_ENVIRONMENT": "/workspaces/gridboss/.devcontainer_venv",
+    "UV_LINK_MODE": "copy"
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:UV_PROJECT_ENVIRONMENT}/bin:/home/vscode/.local/bin:${containerEnv:PATH}"
+  }
+}

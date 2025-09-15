@@ -1,0 +1,35 @@
+{
+  "python.defaultInterpreterPath": ".venv/bin/python3",
+  "python.pythonPath": "venv/bin/python",
+  "editor.formatOnSave": false,
+  "files.associations": {
+      "*.yaml": "home-assistant"
+  },
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "cSpell.words": [
+    "devcontainers",
+    "hass",
+    "homeassistant",
+    "isort",
+    "jasonk",
+    "pylance",
+    "pylint",
+    "venv"
+  ],
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "files.eol": "\n",
+  "editor.tabSize": 4,
+  "python.analysis.autoSearchPaths": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "python.terminal.activateEnvInCurrentTerminal": false,
+  "python.terminal.activateEnvironment": false
+}

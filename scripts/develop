@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if [ ! -d ./config ]; then
+  mkdir ./config
+  hass --config "$(realpath config)" --script ensure_config
+fi
+
+if [ -n "${PYTHONPATH:-}" ]; then
+  PYTHONPATH="${PYTHONPATH}:${PWD}/custom_components"
+else
+  PYTHONPATH="${PWD}/custom_components"
+fi
+export PYTHONPATH
+
+hass --config "$(realpath ./config)" --debug

@@ -1,0 +1,16 @@
+{
+  "domain": "gridboss",
+  "name": "EG4 GridBoss",
+  "version": "0.1.0",
+  "documentation": "https://github.com/jasonk/ha-gridboss",
+  "issue_tracker": "https://github.com/jasonk/ha-gridboss/issues",
+  "requirements": [],
+  "codeowners": [
+    "@jasonk"
+  ],
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "dependencies": [
+    "aiohttp>=3.12.15"
+  ]
+}
